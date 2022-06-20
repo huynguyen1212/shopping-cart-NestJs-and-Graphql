@@ -3,22 +3,15 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import * as ormConfigOptions from './ormconfig';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-      autoSchemaFile: 'schema.gql',
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '',
-      database: 'product-shop',
-      entities: [],
-      synchronize: true,
-    }),
+    TypeOrmModule.forRoot(ormConfigOptions),
   ],
   controllers: [AppController],
   providers: [AppService],
