@@ -3,8 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as ormConfigOptions from './ormconfig';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { ormConfigOptions } from './ormconfig';
 
 @Module({
   imports: [
