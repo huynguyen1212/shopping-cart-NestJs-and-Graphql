@@ -8,10 +8,10 @@ import { ormConfigOptions } from './ormconfig';
 
 @Module({
   imports: [
+    // TypeOrmModule.forRoot(ormConfigOptions),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
     }),
-    TypeOrmModule.forRoot(ormConfigOptions),
   ],
   controllers: [AppController],
   providers: [AppService],
