@@ -5,7 +5,13 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ormConfigOptions } from '../ormconfig';
-import { ItemModule } from './item/item.module';
+import { UserModule } from './module/user/user.module';
+import { PostModule } from './module/post/post.module';
+import { CommentModule } from './module/comment/comment.module';
+import { CartModule } from './module/cart/cart.module';
+import { OrderModule } from './module/order/order.module';
+import { ProductModule } from './module/product/product.module';
+import { CategoryModule } from './module/category/category.module';
 
 @Module({
   imports: [
@@ -14,9 +20,14 @@ import { ItemModule } from './item/item.module';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
-    ItemModule,
+    UserModule,
+    PostModule,
+    CommentModule,
+    CartModule,
+    OrderModule,
+    ProductModule,
+    CategoryModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  // controllers: [AppController],
 })
 export class AppModule {}
