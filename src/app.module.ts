@@ -5,13 +5,13 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ormConfigOptions } from '../ormconfig';
-import { UserModule } from './module/user/user.module';
-import { PostModule } from './module/post/post.module';
-import { CommentModule } from './module/comment/comment.module';
-import { CartModule } from './module/cart/cart.module';
-import { OrderModule } from './module/order/order.module';
-import { ProductModule } from './module/product/product.module';
-import { CategoryModule } from './module/category/category.module';
+import { UsersModule } from './module/users/users.module';
+import { CategoriesModule } from './module/categories/categories.module';
+import { CommentsModule } from './module/comments/comments.module';
+import { OrdersModule } from './module/orders/orders.module';
+import { PostsModule } from './module/posts/posts.module';
+import { ProductsModule } from './module/products/products.module';
+import { CartsModule } from './module/carts/carts.module';
 
 @Module({
   imports: [
@@ -20,13 +20,13 @@ import { CategoryModule } from './module/category/category.module';
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
     }),
-    UserModule,
-    PostModule,
-    CommentModule,
-    CartModule,
-    OrderModule,
-    ProductModule,
-    CategoryModule,
+    UsersModule,
+    CategoriesModule,
+    CommentsModule,
+    OrdersModule,
+    PostsModule,
+    ProductsModule,
+    CartsModule,
   ],
   // controllers: [AppController],
 })
