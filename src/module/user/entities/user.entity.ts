@@ -1,9 +1,12 @@
+import { CartEntity } from 'src/module/cart/entities/cart.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   CreateDateColumn,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { RoleType } from '../user.enum.';
 
@@ -23,4 +26,8 @@ export class UserEntity {
 
   @CreateDateColumn()
   created: Date;
+
+  @OneToOne(() => CartEntity)
+  @JoinColumn()
+  cart: CartEntity;
 }

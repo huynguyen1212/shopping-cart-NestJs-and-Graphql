@@ -5,6 +5,6 @@
 type Query {
   user: String!
   post: String!
-  Cart: String!
+  cart: String!
   category: String!
 }
