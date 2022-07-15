@@ -1,3 +1,4 @@
+import { Field, ObjectType } from '@nestjs/graphql';
 import { User } from 'src/module/users/entities/user.entity';
 import {
   Entity,
@@ -9,11 +10,13 @@ import {
 } from 'typeorm';
 
 @Entity('posts')
+@ObjectType()
 export class Post {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ type: 'varchar', length: 255 })
+  @Field()
   content: string;
 
   @UpdateDateColumn()

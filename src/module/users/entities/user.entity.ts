@@ -1,4 +1,4 @@
-import { Field } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Cart } from 'src/module/carts/entities/cart.entity';
 import {
   Entity,
@@ -12,6 +12,7 @@ import {
 import { RoleType } from '../user.enum.';
 
 @Entity('users')
+@ObjectType()
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
