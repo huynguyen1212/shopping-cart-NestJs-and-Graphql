@@ -18,16 +18,19 @@ export class User {
   id: string;
 
   @Column({ type: 'varchar', length: 20 })
+  @Field({ nullable: true })
   name: string;
 
-  @Column({ type: 'varchar', length: 50, unique: true, nullable: true })
+  @Column({ type: 'varchar', length: 20, unique: true, nullable: true })
   @Field({ nullable: true })
   username: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: true })
+  @Column({ type: 'varchar', length: 20, nullable: true })
+  @Field({ nullable: true })
   password: string;
 
   @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
+  @Field({ nullable: true })
   role: RoleType;
 
   @UpdateDateColumn()
