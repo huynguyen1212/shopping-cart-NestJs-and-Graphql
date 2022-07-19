@@ -2,27 +2,72 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Category {
-  name: String!
-}
-
-type Product {
-  name: String!
-}
-
 type Cart {
   description: String!
 }
 
-type User {
-  name: String
-  username: String
-  password: String
-  role: String
+type Category {
+  name: String!
 }
 
 type Comment {
   content: String!
+}
+
+input CreateCartInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateCommentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateOrderInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreatePostInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateProductInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Mutation {
+  createCart(createCartInput: CreateCartInput!): Cart!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+  createOrder(createOrderInput: CreateOrderInput!): Order!
+  createPost(createPostInput: CreatePostInput!): Post!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  removeCart(id: Int!): Cart!
+  removeCategory(id: Int!): Category!
+  removeComment(id: Int!): Comment!
+  removeOrder(id: Int!): Order!
+  removePost(id: Int!): Post!
+  removeProduct(id: Int!): Product!
+  updateCart(updateCartInput: UpdateCartInput!): Cart!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
+  updatePost(updatePostInput: UpdatePostInput!): Post!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
 }
 
 type Order {
@@ -33,65 +78,31 @@ type Post {
   content: String!
 }
 
+type Product {
+  name: String!
+}
+
 type Query {
-  users: [User!]!
-  user(id: Int!): User!
+  cart(id: Int!): Cart!
+  carts: [Cart!]!
   categories: [Category!]!
   category(id: Int!): Category!
-  comments: [Comment!]!
   comment(id: Int!): Comment!
-  orders: [Order!]!
+  comments: [Comment!]!
   order(id: Int!): Order!
-  posts: [Post!]!
+  orders: [Order!]!
   post(id: Int!): Post!
-  products: [Product!]!
+  posts: [Post!]!
   product(id: Int!): Product!
-  carts: [Cart!]!
-  cart(id: Int!): Cart!
+  products: [Product!]!
+  user(id: Int!): User!
+  users: [User!]!
 }
 
-type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
-  createCategory(createCategoryInput: CreateCategoryInput!): Category!
-  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
-  removeCategory(id: Int!): Category!
-  createComment(createCommentInput: CreateCommentInput!): Comment!
-  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
-  removeComment(id: Int!): Comment!
-  createOrder(createOrderInput: CreateOrderInput!): Order!
-  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
-  removeOrder(id: Int!): Order!
-  createPost(createPostInput: CreatePostInput!): Post!
-  updatePost(updatePostInput: UpdatePostInput!): Post!
-  removePost(id: Int!): Post!
-  createProduct(createProductInput: CreateProductInput!): Product!
-  updateProduct(updateProductInput: UpdateProductInput!): Product!
-  removeProduct(id: Int!): Product!
-  createCart(createCartInput: CreateCartInput!): Cart!
-  updateCart(updateCartInput: UpdateCartInput!): Cart!
-  removeCart(id: Int!): Cart!
-}
-
-input CreateUserInput {
-  username: String!
-  password: String!
-  name: String!
-  role: String!
-}
-
-input UpdateUserInput {
-  username: String
-  password: String
-  name: String
-  role: String
-  id: Int!
-}
-
-input CreateCategoryInput {
+input UpdateCartInput {
   """Example field (placeholder)"""
-  exampleField: Int!
+  exampleField: Int
+  id: Int!
 }
 
 input UpdateCategoryInput {
@@ -100,20 +111,10 @@ input UpdateCategoryInput {
   id: Int!
 }
 
-input CreateCommentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 input UpdateCommentInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
-}
-
-input CreateOrderInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
 }
 
 input UpdateOrderInput {
@@ -122,20 +123,10 @@ input UpdateOrderInput {
   id: Int!
 }
 
-input CreatePostInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 input UpdatePostInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
-}
-
-input CreateProductInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
 }
 
 input UpdateProductInput {
@@ -144,13 +135,11 @@ input UpdateProductInput {
   id: Int!
 }
 
-input CreateCartInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateCartInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+type User {
+  created: DateTime!
+  name: String!
+  password: String!
+  role: String!
+  updated: DateTime!
+  username: String!
 }

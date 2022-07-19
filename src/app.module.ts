@@ -19,6 +19,7 @@ import { CartsModule } from './module/carts/carts.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: 'schema.gql',
+      sortSchema: true,
     }),
     UsersModule,
     CategoriesModule,
@@ -28,6 +29,7 @@ import { CartsModule } from './module/carts/carts.module';
     ProductsModule,
     CartsModule,
   ],
-  // controllers: [AppController],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

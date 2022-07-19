@@ -9,7 +9,7 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    return this.findAll();
   }
 
   findOne(id: number) {
