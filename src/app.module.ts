@@ -12,6 +12,7 @@ import { OrdersModule } from './module/orders/orders.module';
 import { PostsModule } from './module/posts/posts.module';
 import { ProductsModule } from './module/products/products.module';
 import { CartsModule } from './module/carts/carts.module';
+import { AuthModule } from './module/auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CartsModule } from './module/carts/carts.module';
     PostsModule,
     ProductsModule,
     CartsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

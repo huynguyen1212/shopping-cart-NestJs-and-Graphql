@@ -8,10 +8,10 @@ import { UsersService } from '../service/users.service';
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
-  // @Mutation(() => User)
-  // createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
-  //   return this.usersService.create(createUserInput);
-  // }
+  @Mutation(() => User)
+  createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
+    return this.usersService.create(createUserInput);
+  }
 
   @Query(() => [User], { name: 'users' })
   findAll() {
@@ -19,8 +19,8 @@ export class UsersResolver {
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.usersService.findOne(id);
+  findOne(@Args('username') username: string) {
+    return this.usersService.findOne(username);
   }
 
   // @Mutation(() => User)

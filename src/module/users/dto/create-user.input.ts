@@ -9,10 +9,4 @@ export class CreateUserInput {
 
   @Field()
   password: string;
-
-  @Field()
-  name: string;
-
-  @Field()
-  role: string;
 }
