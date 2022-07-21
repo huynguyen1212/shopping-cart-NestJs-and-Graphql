@@ -54,6 +54,16 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type LoginResponse {
+  access_token: String!
+  user: User!
+}
+
+input LoginUserInput {
+  password: String!
+  username: String!
+}
+
 type Mutation {
   createCart(createCartInput: CreateCartInput!): Cart!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
@@ -62,6 +72,7 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   createProduct(createProductInput: CreateProductInput!): Product!
   createUser(createUserInput: CreateUserInput!): User!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
   removeCart(id: Int!): Cart!
   removeCategory(id: Int!): Category!
   removeComment(id: Int!): Comment!
@@ -144,6 +155,7 @@ input UpdateProductInput {
 type User {
   created: DateTime!
   name: String!
+  password: String!
   role: String!
   updated: DateTime!
   username: String!
