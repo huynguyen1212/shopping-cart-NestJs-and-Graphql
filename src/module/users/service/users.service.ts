@@ -18,7 +18,7 @@ export class UsersService {
     };
 
     this.userRepo.insert(user);
-    return this.userRepo.find();
+    return user;
   }
 
   findAll() {

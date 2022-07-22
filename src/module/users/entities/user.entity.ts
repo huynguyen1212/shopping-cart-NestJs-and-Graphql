@@ -21,12 +21,12 @@ export class User {
   @Field()
   username: string;
 
-  @Column({ type: 'varchar', length: 20, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   @Field()
   password: string;
 
   @Column({ type: 'varchar', length: 20 })
-  @Field()
+  // @Field()
   name: string;
 
   @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
@@ -34,11 +34,11 @@ export class User {
   role: RoleType;
 
   @UpdateDateColumn()
-  @Field()
+  // @Field()
   updated: Date;
 
   @CreateDateColumn()
-  @Field()
+  // @Field()
   created: Date;
 
   @OneToOne(() => Cart)

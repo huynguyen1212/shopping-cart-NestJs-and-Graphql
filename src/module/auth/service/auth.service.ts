@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { User } from 'src/module/users/entities/user.entity';
 import { UsersService } from 'src/module/users/service/users.service';
 import { LoginUserInput } from '../dto/login-user.input';
-
+import * as bcrypt from 'bcrypt';
+import { RoleType } from 'src/module/users/user.enum.';
+import { CreateUserInput } from 'src/module/users/dto/create-user.input';
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findOne(username);
 
-    if (user && user.password === password) {
+    const valid = await bcrypt.compare(password, user?.password);
+
+    if (user && valid) {
       const { password, ...result } = user;
       return result;
     }
@@ -17,13 +26,30 @@ export class AuthService {
     return null;
   }
 
-  async login(loginUserInput: LoginUserInput) {
-    const user = await this.userService.findOne(loginUserInput.username);
+  async login(user: User) {
     const { password, ...result } = user;
-
     return {
-      access_token: 'jwt',
+      access_token: this.jwtService.sign({
+        username: user.username,
+        sub: user.id,
+      }),
       user: result,
     };
+  }
+
+  async signup(createUserInput: CreateUserInput) {
+    const user = await this.userService.findOne(createUserInput.username);
+
+    if (user) {
+      throw new Error('User already exists!');
+    }
+
+    const password = await bcrypt.hash(createUserInput.password, 10);
+
+    return this.userService.create({
+      ...createUserInput,
+      role: RoleType['USER'],
+      password,
+    });
   }
 }

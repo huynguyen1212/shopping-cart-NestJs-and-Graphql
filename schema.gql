@@ -45,14 +45,11 @@ input CreateProductInput {
 }
 
 input CreateUserInput {
+  name: String!
   password: String!
+  role: String!
   username: String!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type LoginResponse {
   access_token: String!
@@ -79,6 +76,7 @@ type Mutation {
   removeOrder(id: Int!): Order!
   removePost(id: Int!): Post!
   removeProduct(id: Int!): Product!
+  signup(createUserInput: CreateUserInput!): User!
   updateCart(updateCartInput: UpdateCartInput!): Cart!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
@@ -153,10 +151,7 @@ input UpdateProductInput {
 }
 
 type User {
-  created: DateTime!
-  name: String!
   password: String!
   role: String!
-  updated: DateTime!
   username: String!
 }
