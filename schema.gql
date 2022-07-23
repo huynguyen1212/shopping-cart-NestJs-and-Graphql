@@ -40,8 +40,7 @@ input CreatePostInput {
 }
 
 input CreateProductInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  name: String!
 }
 
 input CreateUserInput {
@@ -75,14 +74,12 @@ type Mutation {
   removeComment(id: Int!): Comment!
   removeOrder(id: Int!): Order!
   removePost(id: Int!): Post!
-  removeProduct(id: Int!): Product!
   signup(createUserInput: CreateUserInput!): User!
   updateCart(updateCartInput: UpdateCartInput!): Cart!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   updatePost(updatePostInput: UpdatePostInput!): Post!
-  updateProduct(updateProductInput: UpdateProductInput!): Product!
 }
 
 type Order {
@@ -108,7 +105,7 @@ type Query {
   orders: [Order!]!
   post(id: Int!): Post!
   posts: [Post!]!
-  product(id: Int!): Product!
+  product(name: String!): Product!
   products: [Product!]!
   user(username: String!): User!
   users: [User!]!
@@ -139,12 +136,6 @@ input UpdateOrderInput {
 }
 
 input UpdatePostInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input UpdateProductInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
