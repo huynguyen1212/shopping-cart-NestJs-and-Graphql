@@ -9,7 +9,7 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
-import { RoleType } from '../user.enum.';
+import { RoleType } from '../../../common/constants/user.enum.';
 
 @Entity('users')
 @ObjectType()
@@ -26,19 +26,15 @@ export class User {
   password: string;
 
   @Column({ type: 'varchar', length: 20 })
-  // @Field()
   name: string;
 
   @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
-  @Field()
   role: RoleType;
 
   @UpdateDateColumn()
-  // @Field()
   updated: Date;
 
   @CreateDateColumn()
-  // @Field()
   created: Date;
 
   @OneToOne(() => Cart)

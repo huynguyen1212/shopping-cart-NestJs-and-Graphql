@@ -46,7 +46,6 @@ input CreateProductInput {
 input CreateUserInput {
   name: String!
   password: String!
-  role: String!
   username: String!
 }
 
@@ -143,6 +142,5 @@ input UpdatePostInput {
 
 type User {
   password: String!
-  role: String!
   username: String!
 }

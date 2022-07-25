@@ -1,6 +1,6 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
 import { IsAlphanumeric } from 'class-validator';
-import { RoleType } from '../user.enum.';
+import { RoleType } from '../../../common/constants/user.enum.';
 
 @InputType()
 export class CreateUserInput {
@@ -13,7 +13,4 @@ export class CreateUserInput {
 
   @Field()
   name: string;
-
-  @Field()
-  role: RoleType;
 }

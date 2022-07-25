@@ -4,7 +4,7 @@ import { User } from 'src/module/users/entities/user.entity';
 import { UsersService } from 'src/module/users/service/users.service';
 import { LoginUserInput } from '../dto/login-user.input';
 import * as bcrypt from 'bcrypt';
-import { RoleType } from 'src/module/users/user.enum.';
+import { RoleType } from 'src/common/constants/user.enum.';
 import { CreateUserInput } from 'src/module/users/dto/create-user.input';
 @Injectable()
 export class AuthService {
@@ -32,6 +32,7 @@ export class AuthService {
       access_token: this.jwtService.sign({
         username: user.username,
         sub: user.id,
+        role: user.role,
       }),
       user: result,
     };
@@ -48,7 +49,6 @@ export class AuthService {
 
     return this.userService.create({
       ...createUserInput,
-      role: RoleType['USER'],
       password,
     });
   }

@@ -14,7 +14,7 @@ import { AuthService } from './service/auth.service';
     TypeOrmModule.forFeature([User]),
     PassportModule,
     JwtModule.register({
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '2000s' },
       secret: 'hide-me', //process.snv.JWT_SECRET
     }),
   ],
