@@ -24,28 +24,28 @@ export class ProductsResolver {
 
   @Query(() => [Product], { name: 'products' })
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleType.ADMIN)
+  // @Roles(RoleType.ADMIN)
   findAll() {
     return this.productsService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Query(() => Product, { name: 'product' })
   findOne(@Args('name') name: string) {
     return this.productsService.findOne(name);
   }
 
-  // @Mutation(() => Product)
-  // updateProduct(
-  //   @Args('updateProductInput') updateProductInput: UpdateProductInput,
-  // ) {
-  //   return this.productsService.update(
-  //     updateProductInput.id,
-  //     updateProductInput,
-  //   );
-  // }
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Mutation(() => Product)
+  updateProduct(
+    @Args('updateProductInput') updateProductInput: UpdateProductInput,
+  ) {
+    return this.productsService.update(updateProductInput);
+  }
 
-  // @Mutation(() => Product)
-  // removeProduct(@Args('id', { type: () => Int }) id: number) {
-  //   return this.productsService.remove(id);
-  // }
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Mutation(() => Product)
+  removeProduct(@Args('id') id: string) {
+    return this.productsService.remove(id);
+  }
 }

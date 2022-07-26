@@ -29,11 +29,27 @@ export class ProductsService {
     return this.productRepo.findOne({ where: { name } });
   }
 
-  // update(id: number, updateProductInput: UpdateProductInput) {
-  //   return `This action updates a #${id} product`;
-  // }
+  findOneById(id: string) {
+    return this.productRepo.findOne({ where: { id } });
+  }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} product`;
-  // }
+  async update(input: UpdateProductInput) {
+    const { id, ...rest } = input;
+
+    const product = await this.findOneById(id);
+
+    const newPeoduct = Object.assign(product, rest);
+
+    await this.productRepo.save(newPeoduct);
+
+    return newPeoduct;
+  }
+
+  async remove(id: string): Promise<Product> {
+    const product = await this.findOneById(id);
+
+    await this.productRepo.delete(id);
+
+    return product;
+  }
 }

@@ -13,6 +13,8 @@ import { PostsModule } from './module/posts/posts.module';
 import { ProductsModule } from './module/products/products.module';
 import { CartsModule } from './module/carts/carts.module';
 import { AuthModule } from './module/auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './guards/roles.guard';
 
 @Module({
   imports: [
@@ -32,6 +34,12 @@ import { AuthModule } from './module/auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

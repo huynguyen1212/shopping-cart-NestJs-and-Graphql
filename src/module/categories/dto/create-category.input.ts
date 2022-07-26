@@ -1,7 +1,9 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { IsAlphanumeric } from 'class-validator';
 
 @InputType()
 export class CreateCategoryInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsAlphanumeric()
+  @Field()
+  name: string;
 }
