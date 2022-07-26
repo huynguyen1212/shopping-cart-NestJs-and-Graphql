@@ -1,7 +1,9 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { IsAlphanumeric } from 'class-validator';
 
 @InputType()
 export class CreateCommentInput {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+  @IsAlphanumeric()
+  @Field()
+  content: string;
 }

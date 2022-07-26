@@ -21,22 +21,19 @@ export class CommentsResolver {
   }
 
   @Query(() => Comment, { name: 'comment' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.commentsService.findOne(id);
+  findOneById(@Args('id') id: string) {
+    return this.commentsService.findOneById(id);
   }
 
   @Mutation(() => Comment)
   updateComment(
     @Args('updateCommentInput') updateCommentInput: UpdateCommentInput,
   ) {
-    return this.commentsService.update(
-      updateCommentInput.id,
-      updateCommentInput,
-    );
+    return this.commentsService.update(updateCommentInput);
   }
 
   @Mutation(() => Comment)
-  removeComment(@Args('id', { type: () => Int }) id: number) {
+  removeComment(@Args('id') id: string) {
     return this.commentsService.remove(id);
   }
 }

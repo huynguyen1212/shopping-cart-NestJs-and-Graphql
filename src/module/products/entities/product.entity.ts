@@ -26,5 +26,5 @@ export class Product {
   created: Date;
 
   @ManyToOne(() => Category)
-  user: Category;
+  category: Category;
 }
