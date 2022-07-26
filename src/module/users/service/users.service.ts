@@ -29,11 +29,27 @@ export class UsersService {
     return this.userRepo.findOne({ where: { username } });
   }
 
-  // update(id: number, updateUserInput: UpdateUserInput) {
-  //   return `This action updates a #${id} user`;
-  // }
+  findOneById(id: string) {
+    return this.userRepo.findOne({ where: { id } });
+  }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`;
-  // }
+  async update(input: UpdateUserInput) {
+    const { id, ...rest } = input;
+
+    const user = await this.findOneById(id);
+
+    const newUser = Object.assign(user, rest);
+
+    await this.userRepo.save(newUser);
+
+    return newUser;
+  }
+
+  async remove(id: string): Promise<User> {
+    const user = await this.findOneById(id);
+
+    await this.userRepo.delete(id);
+
+    return user;
+  }
 }

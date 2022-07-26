@@ -15,6 +15,7 @@ import { RoleType } from '../../../common/constants/user.enum.';
 @ObjectType()
 export class User {
   @PrimaryGeneratedColumn('uuid')
+  @Field()
   id: string;
 
   @Column({ type: 'varchar', length: 20, unique: true, nullable: true })
@@ -26,15 +27,18 @@ export class User {
   password: string;
 
   @Column({ type: 'varchar', length: 20 })
+  @Field()
   name: string;
 
   @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
   role: RoleType;
 
   @UpdateDateColumn()
+  @Field()
   updated: Date;
 
   @CreateDateColumn()
+  @Field()
   created: Date;
 
   @OneToOne(() => Cart)
