@@ -40,8 +40,4 @@ export class User {
   @CreateDateColumn()
   @Field()
   created: Date;
-
-  @OneToOne(() => Cart)
-  @JoinColumn()
-  cart: Cart;
 }

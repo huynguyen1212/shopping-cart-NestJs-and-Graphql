@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { OrderType } from 'src/common/constants/order.enum';
 import { User } from 'src/module/users/entities/user.entity';
 import {
   Entity,
@@ -18,6 +19,9 @@ export class Order {
   @Column({ type: 'varchar', length: 255 })
   @Field()
   description: string;
+
+  @Column({ type: 'enum', enum: OrderType, default: OrderType.WAITING })
+  status: OrderType;
 
   @UpdateDateColumn()
   updated: Date;

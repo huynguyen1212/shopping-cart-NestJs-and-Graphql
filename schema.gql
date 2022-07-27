@@ -4,6 +4,8 @@
 
 type Cart {
   description: String!
+  status: String!
+  total: Float!
 }
 
 type Category {
@@ -15,8 +17,8 @@ type Comment {
 }
 
 input CreateCartInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  productId: String!
+  total: Float!
 }
 
 input CreateCategoryInput {
@@ -28,8 +30,7 @@ input CreateCommentInput {
 }
 
 input CreateOrderInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  description: String!
 }
 
 input CreatePostInput {
@@ -70,18 +71,16 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
   createUser(createUserInput: CreateUserInput!): User!
   login(loginUserInput: LoginUserInput!): LoginResponse!
-  removeCart(id: Int!): Cart!
+  removeCart(id: String!): Cart!
   removeCategory(id: String!): Category!
   removeComment(id: String!): Comment!
-  removeOrder(id: Int!): Order!
+  removeOrder(id: String!): Order!
   removePost(id: String!): Post!
   removeProduct(id: String!): Product!
   removeUser(id: String!): User!
   signup(createUserInput: CreateUserInput!): User!
-  updateCart(updateCartInput: UpdateCartInput!): Cart!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
-  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   updatePost(updatePostInput: UpdatePostInput!): Post!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   updateUser(updateUserInput: UpdateUserInput!): User!
@@ -100,13 +99,13 @@ type Product {
 }
 
 type Query {
-  cart(id: Int!): Cart!
+  cart(id: String!): Cart!
   carts: [Cart!]!
   categories: [Category!]!
   category(name: String!): Category!
   comment(id: String!): Comment!
   comments: [Comment!]!
-  order(id: Int!): Order!
+  order(id: String!): Order!
   orders: [Order!]!
   post(id: String!): Post!
   posts: [Post!]!
@@ -114,12 +113,6 @@ type Query {
   products: [Product!]!
   user(username: String!): User!
   users: [User!]!
-}
-
-input UpdateCartInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }
 
 input UpdateCategoryInput {
@@ -130,12 +123,6 @@ input UpdateCategoryInput {
 input UpdateCommentInput {
   content: String
   id: String!
-}
-
-input UpdateOrderInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }
 
 input UpdatePostInput {

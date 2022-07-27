@@ -19,17 +19,17 @@ export class OrdersResolver {
   }
 
   @Query(() => Order, { name: 'order' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.ordersService.findOne(id);
+  findOne(@Args('id') id: string) {
+    return this.ordersService.findOneById(id);
   }
 
-  @Mutation(() => Order)
-  updateOrder(@Args('updateOrderInput') updateOrderInput: UpdateOrderInput) {
-    return this.ordersService.update(updateOrderInput.id, updateOrderInput);
-  }
+  // @Mutation(() => Order)
+  // updateOrder(@Args('updateOrderInput') updateOrderInput: UpdateOrderInput) {
+  //   return this.ordersService.update(updateOrderInput.id, updateOrderInput);
+  // }
 
   @Mutation(() => Order)
-  removeOrder(@Args('id', { type: () => Int }) id: number) {
+  removeOrder(@Args('id') id: string) {
     return this.ordersService.remove(id);
   }
 }

@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateOrderInput } from '../dto/create-order.input';
 import { UpdateOrderInput } from '../dto/update-order.input';
+import { Order } from '../entities/order.entity';
 
 @Injectable()
 export class OrdersService {
+  constructor(
+    @InjectRepository(Order)
+    private readonly orderRepo: Repository<Order>,
+  ) {}
+
   create(createOrderInput: CreateOrderInput) {
-    return 'This action adds a new order';
+    const order = {
+      ...createOrderInput,
+    };
+
+    this.orderRepo.insert(order);
+    return order;
   }
 
   findAll() {
-    return `This action returns all orders`;
+    return this.orderRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} order`;
+  findOneById(id: string) {
+    return this.orderRepo.findOne({ where: { id } });
   }
 
-  update(id: number, updateOrderInput: UpdateOrderInput) {
-    return `This action updates a #${id} order`;
-  }
+  // async update(input: UpdateOrderInput) {
+  //   const { id, ...rest } = input;
 
-  remove(id: number) {
-    return `This action removes a #${id} order`;
+  //   const order = await this.findOneById(id);
+
+  //   const newPeoduct = Object.assign(product, rest);
+
+  //   await this.orderRepo.save(newPeoduct);
+
+  //   return newPeoduct;
+  // }
+
+  async remove(id: string): Promise<Order> {
+    const order = await this.findOneById(id);
+
+    await this.orderRepo.delete(id);
+
+    return order;
   }
 }

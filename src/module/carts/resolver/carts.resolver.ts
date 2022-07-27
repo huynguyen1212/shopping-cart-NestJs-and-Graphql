@@ -19,17 +19,17 @@ export class CartsResolver {
   }
 
   @Query(() => Cart, { name: 'cart' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.cartsService.findOne(id);
+  findOne(@Args('id') id: string) {
+    return this.cartsService.findOneById(id);
   }
 
-  @Mutation(() => Cart)
-  updateCart(@Args('updateCartInput') updateCartInput: UpdateCartInput) {
-    return this.cartsService.update(updateCartInput.id, updateCartInput);
-  }
+  // @Mutation(() => Cart)
+  // updateCart(@Args('updateCartInput') updateCartInput: UpdateCartInput) {
+  //   return this.cartsService.update(updateCartInput.id, updateCartInput);
+  // }
 
   @Mutation(() => Cart)
-  removeCart(@Args('id', { type: () => Int }) id: number) {
+  removeCart(@Args('id') id: string) {
     return this.cartsService.remove(id);
   }
 }

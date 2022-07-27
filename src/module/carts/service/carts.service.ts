@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateCartInput } from '../dto/create-cart.input';
 import { UpdateCartInput } from '../dto/update-cart.input';
+import { Cart } from '../entities/cart.entity';
 
 @Injectable()
 export class CartsService {
-  create(createCartInput: CreateCartInput) {
-    return 'This action adds a new cart';
+  constructor(
+    @InjectRepository(Cart)
+    private readonly orderRepo: Repository<Cart>,
+  ) {}
+
+  create(createOrderInput: CreateCartInput) {
+    const order = {
+      ...createOrderInput,
+    };
+
+    this.orderRepo.insert(order);
+    return order;
   }
 
   findAll() {
-    return `This action returns all carts`;
+    return this.orderRepo.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cart`;
+  findOneById(id: string) {
+    return this.orderRepo.findOne({ where: { id } });
   }
 
-  update(id: number, updateCartInput: UpdateCartInput) {
-    return `This action updates a #${id} cart`;
-  }
+  // async update(input: UpdateOrderInput) {
+  //   const { id, ...rest } = input;
 
-  remove(id: number) {
-    return `This action removes a #${id} cart`;
+  //   const order = await this.findOneById(id);
+
+  //   const newPeoduct = Object.assign(product, rest);
+
+  //   await this.orderRepo.save(newPeoduct);
+
+  //   return newPeoduct;
+  // }
+
+  async remove(id: string): Promise<Cart> {
+    const order = await this.findOneById(id);
+
+    await this.orderRepo.delete(id);
+
+    return order;
   }
 }
