@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Post } from 'src/module/posts/entities/post.entity';
 import { User } from 'src/module/users/entities/user.entity';
 import {
   Entity,
@@ -25,6 +26,9 @@ export class Comment {
   @CreateDateColumn()
   created: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User)
   user: User;
+
+  @ManyToOne(() => Post)
+  post: Post;
 }

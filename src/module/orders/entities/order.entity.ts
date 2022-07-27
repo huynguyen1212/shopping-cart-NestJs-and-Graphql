@@ -25,6 +25,6 @@ export class Order {
   @CreateDateColumn()
   created: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User)
   user: User;
 }
