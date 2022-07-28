@@ -15,7 +15,7 @@ export class CategoriesResolver {
 
   @Mutation(() => Category)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles(RoleType.ADMIN)
+  @Roles(RoleType.ADMIN)
   createCategory(
     @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
   ) {
@@ -23,6 +23,7 @@ export class CategoriesResolver {
   }
 
   @Query(() => [Category], { name: 'categories' })
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.categoriesService.findAll();
   }
