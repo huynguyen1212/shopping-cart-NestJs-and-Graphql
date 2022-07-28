@@ -5,13 +5,13 @@ import { RoleType } from 'src/common/constants/user.enum.';
 import { ROLES_KEY } from 'src/decorators/roles.decorator';
 import { CodeType } from 'src/common/constants/code-type.enum';
 import { AppError } from 'src/exceptions/app-error';
-import { UsersService } from 'src/module/users/service/users.service';
+import { UsersService } from '../module/users/service/users.service';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(
-    private reflector: Reflector,
     private usersService: UsersService,
+    private reflector: Reflector,
   ) {}
 
   getRequest(context: ExecutionContext) {

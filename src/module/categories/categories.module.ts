@@ -6,7 +6,7 @@ import { CategoriesService } from './service/categories.service';
 import { UsersService } from '../users/service/users.service';
 
 @Module({
-  providers: [CategoriesResolver, CategoriesService, UsersService],
+  providers: [UsersService, CategoriesResolver, CategoriesService],
   imports: [TypeOrmModule.forFeature([Category])],
 })
 export class CategoriesModule {}
