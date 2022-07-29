@@ -16,7 +16,7 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  @UseGuards(JwtAuthGuard)
+  
   findAll() {
     return this.usersService.findAll();
   }

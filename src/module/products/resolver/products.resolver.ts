@@ -14,7 +14,6 @@ export class ProductsResolver {
   constructor(private readonly productsService: ProductsService) {}
 
   @Mutation(() => Product)
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.ADMIN)
   createProduct(
     @Args('createProductInput') createProductInput: CreateProductInput,
@@ -23,19 +22,16 @@ export class ProductsResolver {
   }
 
   @Query(() => [Product], { name: 'products' })
-  @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(RoleType.ADMIN)
   findAll() {
     return this.productsService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Query(() => Product, { name: 'product' })
   findOne(@Args('name') name: string) {
     return this.productsService.findOne(name);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => Product)
   updateProduct(
     @Args('updateProductInput') updateProductInput: UpdateProductInput,
@@ -43,7 +39,6 @@ export class ProductsResolver {
     return this.productsService.update(updateProductInput);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Mutation(() => Product)
   removeProduct(@Args('id') id: string) {
     return this.productsService.remove(id);

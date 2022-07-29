@@ -7,11 +7,13 @@ import { LoginResponse } from '../dto/login-reponse';
 import { LoginUserInput } from '../dto/login-user.input';
 import { GqlAuthGuard } from '../gql-auth.guard';
 import { AuthService } from '../service/auth.service';
+import { Public } from 'src/decorators/jwt.decorators';
 
 @Resolver()
 export class AuthResolver {
   constructor(private authService: AuthService) {}
 
+  @Public()
   @Mutation(() => LoginResponse)
   @UseGuards(GqlAuthGuard)
   login(
@@ -21,6 +23,7 @@ export class AuthResolver {
     return this.authService.login(context.user);
   }
 
+  @Public()
   @Mutation(() => User)
   signup(@Args('createUserInput') createUserInput: CreateUserInput) {
     return this.authService.signup(createUserInput);

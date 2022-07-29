@@ -3,9 +3,6 @@ import { Category } from '../entities/category.entity';
 import { CreateCategoryInput } from '../dto/create-category.input';
 import { UpdateCategoryInput } from '../dto/update-category.input';
 import { CategoriesService } from '../service/categories.service';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/module/auth/jwt-auth.guard';
-import { RolesGuard } from 'src/guards/roles.guard';
 import { RoleType } from 'src/common/constants/user.enum.';
 import { Roles } from 'src/decorators/roles.decorator';
 
@@ -14,7 +11,6 @@ export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Mutation(() => Category)
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.ADMIN)
   createCategory(
     @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
@@ -23,7 +19,6 @@ export class CategoriesResolver {
   }
 
   @Query(() => [Category], { name: 'categories' })
-  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.categoriesService.findAll();
   }
