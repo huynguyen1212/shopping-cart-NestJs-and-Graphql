@@ -29,6 +29,10 @@ input CreateCommentInput {
   content: String!
 }
 
+input CreateEvaluateInput {
+  content: String!
+}
+
 input CreateOrderInput {
   description: String!
 }
@@ -52,6 +56,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Evaluate {
+  content: String!
+}
+
 type LoginResponse {
   access_token: String!
   user: User!
@@ -66,21 +74,22 @@ type Mutation {
   createCart(createCartInput: CreateCartInput!): Cart!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   createComment(createCommentInput: CreateCommentInput!): Comment!
+  createEvaluate(createEvaluateInput: CreateEvaluateInput!): Evaluate!
   createOrder(createOrderInput: CreateOrderInput!): Order!
   createPost(createPostInput: CreatePostInput!): Post!
   createProduct(createProductInput: CreateProductInput!): Product!
-  createUser(createUserInput: CreateUserInput!): User!
   login(loginUserInput: LoginUserInput!): LoginResponse!
   removeCart(id: String!): Cart!
   removeCategory(id: String!): Category!
   removeComment(id: String!): Comment!
+  removeEvaluate(id: String!): Evaluate!
   removeOrder(id: String!): Order!
   removePost(id: String!): Post!
   removeProduct(id: String!): Product!
-  removeUser(id: String!): User!
   signup(createUserInput: CreateUserInput!): User!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
+  updateEvaluate(updateEvaluateInput: UpdateEvaluateInput!): Evaluate!
   updatePost(updatePostInput: UpdatePostInput!): Post!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   updateUser(updateUserInput: UpdateUserInput!): User!
@@ -105,6 +114,7 @@ type Query {
   category(name: String!): Category!
   comment(id: String!): Comment!
   comments: [Comment!]!
+  evaluate(id: String!): Evaluate!
   order(id: String!): Order!
   orders: [Order!]!
   post(id: String!): Post!
@@ -121,6 +131,11 @@ input UpdateCategoryInput {
 }
 
 input UpdateCommentInput {
+  content: String
+  id: String!
+}
+
+input UpdateEvaluateInput {
   content: String
   id: String!
 }

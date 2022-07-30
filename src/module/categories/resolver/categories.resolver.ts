@@ -6,12 +6,12 @@ import { CategoriesService } from '../service/categories.service';
 import { RoleType } from 'src/common/constants/user.enum.';
 import { Roles } from 'src/decorators/roles.decorator';
 
+@Roles(RoleType.ADMIN)
 @Resolver(() => Category)
 export class CategoriesResolver {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Mutation(() => Category)
-  @Roles(RoleType.ADMIN)
   createCategory(
     @Args('createCategoryInput') createCategoryInput: CreateCategoryInput,
   ) {

@@ -1,4 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { RoleType } from 'src/common/constants/user.enum.';
+import { Roles } from 'src/decorators/roles.decorator';
 import { CreateCartInput } from '../dto/create-cart.input';
 import { UpdateCartInput } from '../dto/update-cart.input';
 import { Cart } from '../entities/cart.entity';
@@ -9,6 +11,7 @@ export class CartsResolver {
   constructor(private readonly cartsService: CartsService) {}
 
   @Mutation(() => Cart)
+  @Roles(RoleType.USER)
   createCart(@Args('createCartInput') createCartInput: CreateCartInput) {
     return this.cartsService.create(createCartInput);
   }
