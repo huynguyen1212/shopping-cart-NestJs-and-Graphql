@@ -4,11 +4,13 @@ import { User } from 'src/module/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
+  Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
+@Entity('evaluates')
 @ObjectType()
 export class Evaluate {
   @PrimaryGeneratedColumn('uuid')
@@ -28,5 +30,5 @@ export class Evaluate {
   user: User;
 
   @ManyToOne(() => Product)
-  post: Product;
+  product: Product;
 }
