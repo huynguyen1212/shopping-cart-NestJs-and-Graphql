@@ -3,7 +3,6 @@
 # ------------------------------------------------------
 
 type Cart {
-  description: String!
   status: String!
   total: Float!
 }
@@ -104,6 +103,7 @@ type Post {
 }
 
 type Product {
+  id: String!
   name: String!
 }
 

@@ -13,6 +13,7 @@ import {
 @ObjectType()
 export class Product {
   @PrimaryGeneratedColumn('uuid')
+  @Field()
   id: string;
 
   @Column({ type: 'varchar', length: 20 })

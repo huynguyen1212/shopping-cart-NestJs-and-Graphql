@@ -9,43 +9,46 @@ import { Cart } from '../entities/cart.entity';
 export class CartsService {
   constructor(
     @InjectRepository(Cart)
-    private readonly orderRepo: Repository<Cart>,
+    private readonly cartRepo: Repository<Cart>,
   ) {}
 
-  create(createOrderInput: CreateCartInput) {
-    const order = {
+  create(createOrderInput: CreateCartInput, userId: any) {
+    const cart = {
       ...createOrderInput,
+      userId,
     };
 
-    this.orderRepo.insert(order);
-    return order;
+    console.log(cart);
+
+    this.cartRepo.insert(cart);
+    return cart;
   }
 
   findAll() {
-    return this.orderRepo.find();
+    return this.cartRepo.find();
   }
 
   findOneById(id: string) {
-    return this.orderRepo.findOne({ where: { id } });
+    return this.cartRepo.findOne({ where: { id } });
   }
 
   // async update(input: UpdateOrderInput) {
   //   const { id, ...rest } = input;
 
-  //   const order = await this.findOneById(id);
+  //   const cart = await this.findOneById(id);
 
   //   const newPeoduct = Object.assign(product, rest);
 
-  //   await this.orderRepo.save(newPeoduct);
+  //   await this.cartRepo.save(newPeoduct);
 
   //   return newPeoduct;
   // }
 
   async remove(id: string): Promise<Cart> {
-    const order = await this.findOneById(id);
+    const cart = await this.findOneById(id);
 
-    await this.orderRepo.delete(id);
+    await this.cartRepo.delete(id);
 
-    return order;
+    return cart;
   }
 }

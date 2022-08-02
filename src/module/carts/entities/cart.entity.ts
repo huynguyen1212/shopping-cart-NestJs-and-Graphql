@@ -19,10 +19,6 @@ export class Cart {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 255 })
-  @Field()
-  description: string;
-
   @Column({ type: 'enum', enum: CartType, default: CartType.UNPICK })
   @Field()
   status: CartType;
