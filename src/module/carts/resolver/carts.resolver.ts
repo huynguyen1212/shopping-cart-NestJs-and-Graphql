@@ -15,9 +15,9 @@ export class CartsResolver {
   @Roles(RoleType.USER)
   createCart(
     @Args('createCartInput') createCartInput: CreateCartInput,
-    @CurrentUser() user: any,
+    @CurrentUser() user: User,
   ) {
-    return this.cartsService.create(createCartInput, user.userId);
+    return this.cartsService.create(createCartInput, user);
   }
 
   @Query(() => [Cart], { name: 'carts' })

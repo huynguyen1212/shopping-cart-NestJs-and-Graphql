@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from 'src/module/products/entities/product.entity';
+import { ProductsService } from 'src/module/products/service/products.service';
+import { User } from 'src/module/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateCartInput } from '../dto/create-cart.input';
 import { UpdateCartInput } from '../dto/update-cart.input';
@@ -10,15 +13,23 @@ export class CartsService {
   constructor(
     @InjectRepository(Cart)
     private readonly cartRepo: Repository<Cart>,
+    private readonly productsService: ProductsService,
   ) {}
 
-  create(createOrderInput: CreateCartInput, userId: any) {
-    const cart = {
-      ...createOrderInput,
-      userId,
-    };
+  async create(createOrderInput: CreateCartInput, user: User) {
+    const p = await this.productsService.findOneById(
+      createOrderInput.productId,
+    );
 
-    console.log(cart);
+    if (!p) {
+      throw new Error('Product not found');
+    }
+
+    const cart = {
+      total: createOrderInput.total,
+      user,
+      product: p,
+    };
 
     this.cartRepo.insert(cart);
     return cart;
