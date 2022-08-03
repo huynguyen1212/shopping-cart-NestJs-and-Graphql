@@ -38,11 +38,11 @@ export class CategoriesService {
 
     const category = await this.findOneById(id);
 
-    const newPeoduct = Object.assign(category, rest);
+    const newCategory = Object.assign(category, rest);
 
-    await this.categoryRepo.save(newPeoduct);
+    await this.categoryRepo.save(newCategory);
 
-    return newPeoduct;
+    return newCategory;
   }
 
   async remove(id: string): Promise<Category> {

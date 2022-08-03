@@ -2,7 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddProductToCartInput {
+  productId: String!
+  total: Float!
+}
+
 type Cart {
+  id: String!
   status: String!
   total: Float!
 }
@@ -13,11 +19,6 @@ type Category {
 
 type Comment {
   content: String!
-}
-
-input CreateCartInput {
-  productId: String!
-  total: Float!
 }
 
 input CreateCategoryInput {
@@ -70,7 +71,7 @@ input LoginUserInput {
 }
 
 type Mutation {
-  createCart(createCartInput: CreateCartInput!): Cart!
+  addProductToCart(addProductToCart: AddProductToCartInput!): Cart!
   createCategory(createCategoryInput: CreateCategoryInput!): Category!
   createComment(createCommentInput: CreateCommentInput!): Comment!
   createEvaluate(createEvaluateInput: CreateEvaluateInput!): Evaluate!
@@ -85,6 +86,7 @@ type Mutation {
   removeOrder(id: String!): Order!
   removePost(id: String!): Post!
   removeProduct(id: String!): Product!
+  removeProductInCart(removeProductInCartInput: RemoveProductInCartInput!): Cart!
   signup(createUserInput: CreateUserInput!): User!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
@@ -123,6 +125,10 @@ type Query {
   products: [Product!]!
   user(username: String!): User!
   users: [User!]!
+}
+
+input RemoveProductInCartInput {
+  productId: String!
 }
 
 input UpdateCategoryInput {

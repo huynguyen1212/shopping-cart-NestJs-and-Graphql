@@ -11,14 +11,13 @@ import {
   JoinTable,
   Column,
   ManyToOne,
-  JoinColumn,
-  OneToOne,
 } from 'typeorm';
 
 @Entity('carts')
 @ObjectType()
 export class Cart {
   @PrimaryGeneratedColumn('uuid')
+  @Field()
   id: string;
 
   @Column({ type: 'enum', enum: CartType, default: CartType.UNPICK })
@@ -35,8 +34,7 @@ export class Cart {
   @CreateDateColumn()
   created: Date;
 
-  @OneToOne(() => Product)
-  @JoinColumn()
+  @ManyToOne(() => Product)
   product: Product;
 
   @ManyToOne(() => User)

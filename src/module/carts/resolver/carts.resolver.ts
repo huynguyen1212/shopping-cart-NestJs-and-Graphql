@@ -3,7 +3,8 @@ import { RoleType } from 'src/common/constants/user.enum.';
 import { CurrentUser } from 'src/decorators/current-user';
 import { Roles } from 'src/decorators/roles.decorator';
 import { User } from 'src/module/users/entities/user.entity';
-import { CreateCartInput } from '../dto/create-cart.input';
+import { AddProductToCartInput } from '../dto/add-product-to-cart.input';
+import { RemoveProductInCartInput } from '../dto/remove-prodyct-in-cart.input';
 import { Cart } from '../entities/cart.entity';
 import { CartsService } from '../service/carts.service';
 
@@ -13,16 +14,30 @@ export class CartsResolver {
 
   @Mutation(() => Cart)
   @Roles(RoleType.USER)
-  createCart(
-    @Args('createCartInput') createCartInput: CreateCartInput,
+  addProductToCart(
+    @Args('addProductToCart') addProductToCart: AddProductToCartInput,
     @CurrentUser() user: User,
   ) {
-    return this.cartsService.create(createCartInput, user);
+    return this.cartsService.addProductToCart(addProductToCart, user);
+  }
+
+  @Mutation(() => Cart)
+  @Roles(RoleType.USER)
+  removeProductInCart(
+    @Args('removeProductInCartInput')
+    removeProductInCartInput: RemoveProductInCartInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.cartsService.removeProductInCart(
+      removeProductInCartInput,
+      user,
+    );
   }
 
   @Query(() => [Cart], { name: 'carts' })
-  findAll() {
-    return this.cartsService.findAll();
+  @Roles(RoleType.USER)
+  findAll(@CurrentUser() user: User) {
+    return this.cartsService.findAll(user);
   }
 
   @Query(() => Cart, { name: 'cart' })

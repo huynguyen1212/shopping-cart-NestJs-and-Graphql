@@ -6,12 +6,12 @@ import { UpdateProductInput } from '../dto/update-product.input';
 import { Product } from '../entities/product.entity';
 import { ProductsService } from '../service/products.service';
 
-@Roles(RoleType.ADMIN)
 @Resolver(() => Product)
 export class ProductsResolver {
   constructor(private readonly productsService: ProductsService) {}
 
   @Mutation(() => Product)
+  @Roles(RoleType.ADMIN)
   createProduct(
     @Args('createProductInput') createProductInput: CreateProductInput,
   ) {
@@ -19,16 +19,19 @@ export class ProductsResolver {
   }
 
   @Query(() => [Product], { name: 'products' })
+  @Roles(RoleType.ADMIN)
   findAll() {
     return this.productsService.findAll();
   }
 
   @Query(() => Product, { name: 'product' })
+  @Roles(RoleType.ADMIN)
   findOne(@Args('name') name: string) {
     return this.productsService.findOne(name);
   }
 
   @Mutation(() => Product)
+  @Roles(RoleType.ADMIN)
   updateProduct(
     @Args('updateProductInput') updateProductInput: UpdateProductInput,
   ) {
@@ -36,6 +39,7 @@ export class ProductsResolver {
   }
 
   @Mutation(() => Product)
+  @Roles(RoleType.ADMIN)
   removeProduct(@Args('id') id: string) {
     return this.productsService.remove(id);
   }

@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from 'src/module/products/entities/product.entity';
 import { ProductsService } from 'src/module/products/service/products.service';
 import { User } from 'src/module/users/entities/user.entity';
 import { Repository } from 'typeorm';
-import { CreateCartInput } from '../dto/create-cart.input';
-import { UpdateCartInput } from '../dto/update-cart.input';
+import { AddProductToCartInput } from '../dto/add-product-to-cart.input';
+import { RemoveProductInCartInput } from '../dto/remove-prodyct-in-cart.input';
 import { Cart } from '../entities/cart.entity';
 
 @Injectable()
@@ -16,27 +15,85 @@ export class CartsService {
     private readonly productsService: ProductsService,
   ) {}
 
-  async create(createOrderInput: CreateCartInput, user: User) {
-    const p = await this.productsService.findOneById(
-      createOrderInput.productId,
+  async addProductToCart(
+    addProductToCartInput: AddProductToCartInput,
+    user: User,
+  ) {
+    //check product
+    const product = await this.productsService.findOneById(
+      addProductToCartInput.productId,
     );
 
-    if (!p) {
+    if (!product) {
       throw new Error('Product not found');
     }
 
+    //check duplicate
+    const duplicate = await this.cartRepo
+      .createQueryBuilder('c')
+      .andWhere('c.product.id = :pro', { pro: product.id })
+      .andWhere('c.user.id = :u', { u: user.id })
+      .getOne();
+
+    if (duplicate) {
+      const cart = {
+        ...duplicate,
+        total: addProductToCartInput.total + duplicate.total,
+      };
+
+      this.cartRepo.save(cart);
+      return cart;
+    } else {
+      const cart = {
+        total: addProductToCartInput.total,
+        user,
+        product,
+      };
+
+      this.cartRepo.save(cart);
+
+      return cart;
+    }
+  }
+
+  async removeProductInCart(
+    removeProductInCart: RemoveProductInCartInput,
+    user: User,
+  ) {
+    //check product
+    const product = await this.productsService.findOneById(
+      removeProductInCart.productId,
+    );
+
+    if (!product) {
+      throw new Error('Product not found');
+    }
+
+    //check duplicate
+    const duplicate = await this.cartRepo
+      .createQueryBuilder('c')
+      .andWhere('c.product.id = :pro', { pro: product.id })
+      .andWhere('c.user.id = :u', { u: user.id })
+      .getOne();
+
     const cart = {
-      total: createOrderInput.total,
-      user,
-      product: p,
+      ...duplicate,
+      total: duplicate.total - 1,
     };
 
-    this.cartRepo.insert(cart);
+    this.cartRepo.save(cart);
     return cart;
   }
 
-  findAll() {
-    return this.cartRepo.find();
+  async findAll(user: User) {
+    const cart = await this.cartRepo
+      .createQueryBuilder('c')
+      .andWhere('c.user.id = :u', { u: user.id })
+      .getMany();
+
+    console.log('cart: ', cart);
+
+    return cart;
   }
 
   findOneById(id: string) {
