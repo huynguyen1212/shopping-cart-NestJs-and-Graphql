@@ -5,6 +5,7 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { User } from 'src/module/users/entities/user.entity';
 import { AddProductToCartInput } from '../dto/add-product-to-cart.input';
 import { RemoveProductInCartInput } from '../dto/remove-prodyct-in-cart.input';
+import { UpdateCartInput } from '../dto/update-cart.input';
 import { Cart } from '../entities/cart.entity';
 import { CartsService } from '../service/carts.service';
 
@@ -32,6 +33,15 @@ export class CartsResolver {
       removeProductInCartInput,
       user,
     );
+  }
+
+  @Mutation(() => Cart)
+  @Roles(RoleType.USER)
+  updateStatusCart(
+    @Args('updateStatusCart')
+    updateStatusCart: UpdateCartInput,
+  ) {
+    return this.cartsService.update(updateStatusCart);
   }
 
   @Query(() => [Cart], { name: 'carts' })

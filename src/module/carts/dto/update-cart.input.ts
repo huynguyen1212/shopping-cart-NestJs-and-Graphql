@@ -3,6 +3,9 @@ import { AddProductToCartInput } from './add-product-to-cart.input';
 
 @InputType()
 export class UpdateCartInput extends PartialType(AddProductToCartInput) {
-  @Field(() => Int)
-  id: number;
+  @Field()
+  id: string;
+
+  @Field()
+  status: string;
 }

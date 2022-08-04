@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/module/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateOrderInput } from '../dto/create-order.input';
 import { UpdateOrderInput } from '../dto/update-order.input';
@@ -12,7 +13,7 @@ export class OrdersService {
     private readonly orderRepo: Repository<Order>,
   ) {}
 
-  async create(createOrderInput: CreateOrderInput) {
+  async create(createOrderInput: CreateOrderInput, user: User) {
     const order = {
       ...createOrderInput,
     };

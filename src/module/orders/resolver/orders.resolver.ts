@@ -1,6 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { RoleType } from 'src/common/constants/user.enum.';
+import { CurrentUser } from 'src/decorators/current-user';
 import { Roles } from 'src/decorators/roles.decorator';
+import { User } from 'src/module/users/entities/user.entity';
 import { CreateOrderInput } from '../dto/create-order.input';
 import { UpdateOrderInput } from '../dto/update-order.input';
 import { Order } from '../entities/order.entity';
@@ -12,8 +14,11 @@ export class OrdersResolver {
 
   @Mutation(() => Order)
   @Roles(RoleType.USER)
-  createOrder(@Args('createOrderInput') createOrderInput: CreateOrderInput) {
-    return this.ordersService.create(createOrderInput);
+  createOrder(
+    @Args('createOrderInput') createOrderInput: CreateOrderInput,
+    @CurrentUser() user: User,
+  ) {
+    return this.ordersService.create(createOrderInput, user);
   }
 
   @Query(() => [Order], { name: 'orders' })

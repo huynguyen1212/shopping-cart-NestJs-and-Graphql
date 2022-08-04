@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateOrderInput } from 'src/module/orders/dto/update-order.input';
 import { ProductsService } from 'src/module/products/service/products.service';
 import { User } from 'src/module/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { AddProductToCartInput } from '../dto/add-product-to-cart.input';
 import { RemoveProductInCartInput } from '../dto/remove-prodyct-in-cart.input';
+import { UpdateCartInput } from '../dto/update-cart.input';
 import { Cart } from '../entities/cart.entity';
 
 @Injectable()
@@ -98,17 +100,17 @@ export class CartsService {
     return this.cartRepo.findOne({ where: { id } });
   }
 
-  // async update(input: UpdateOrderInput) {
-  //   const { id, ...rest } = input;
+  async update(input: UpdateCartInput) {
+    const { id, ...rest } = input;
 
-  //   const cart = await this.findOneById(id);
+    const cart = await this.findOneById(id);
 
-  //   const newPeoduct = Object.assign(product, rest);
+    const newCart = Object.assign(cart, rest);
 
-  //   await this.cartRepo.save(newPeoduct);
+    await this.cartRepo.save(newCart);
 
-  //   return newPeoduct;
-  // }
+    return newCart;
+  }
 
   async removeOneTypeProductInCart(id: string) {
     const cart = await this.findOneById(id);

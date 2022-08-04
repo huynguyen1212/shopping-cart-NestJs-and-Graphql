@@ -97,6 +97,7 @@ type Mutation {
   updateEvaluate(updateEvaluateInput: UpdateEvaluateInput!): Evaluate!
   updatePost(updatePostInput: UpdatePostInput!): Post!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
+  updateStatusCart(updateStatusCart: UpdateCartInput!): Cart!
   updateUser(updateUserInput: UpdateUserInput!): User!
 }
 
@@ -138,6 +139,13 @@ type Query {
 
 input RemoveProductInCartInput {
   productId: String!
+}
+
+input UpdateCartInput {
+  id: String!
+  productId: String
+  status: String!
+  total: Float
 }
 
 input UpdateCategoryInput {
