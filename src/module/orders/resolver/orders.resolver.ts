@@ -32,8 +32,8 @@ export class OrdersResolver {
   //   return this.ordersService.update(updateOrderInput.id, updateOrderInput);
   // }
 
-  @Mutation(() => Order)
-  removeOrder(@Args('id') id: string) {
-    return this.ordersService.remove(id);
-  }
+  // @Mutation(() => Order)
+  // removeOrder(@Args('id') id: string) {
+  //   return this.ordersService.remove(id);
+  // }
 }

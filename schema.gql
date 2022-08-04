@@ -34,6 +34,7 @@ input CreateEvaluateInput {
 }
 
 input CreateOrderInput {
+  cartId: String!
   description: String!
 }
 
@@ -42,7 +43,10 @@ input CreatePostInput {
 }
 
 input CreateProductInput {
+  categoryId: String!
   name: String!
+  price: Float!
+  total: Float!
 }
 
 input CreateUserInput {
@@ -79,11 +83,11 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   createProduct(createProductInput: CreateProductInput!): Product!
   login(loginUserInput: LoginUserInput!): LoginResponse!
-  removeCart(id: String!): Cart!
+  removeAllCart: Cart!
   removeCategory(id: String!): Category!
   removeComment(id: String!): Comment!
   removeEvaluate(id: String!): Evaluate!
-  removeOrder(id: String!): Order!
+  removeOneTypeProductInCart(id: String!): Cart!
   removePost(id: String!): Post!
   removeProduct(id: String!): Product!
   removeProductInCart(removeProductInCartInput: RemoveProductInCartInput!): Cart!
@@ -98,6 +102,9 @@ type Mutation {
 
 type Order {
   description: String!
+  id: String!
+  status: String!
+  totaPrice: Float!
 }
 
 type Post {
@@ -107,6 +114,8 @@ type Post {
 type Product {
   id: String!
   name: String!
+  price: Float!
+  total: Float!
 }
 
 type Query {
@@ -152,8 +161,11 @@ input UpdatePostInput {
 }
 
 input UpdateProductInput {
+  categoryId: String
   id: String!
   name: String
+  price: Float
+  total: Float
 }
 
 input UpdateUserInput {

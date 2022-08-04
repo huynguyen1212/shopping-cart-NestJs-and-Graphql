@@ -12,7 +12,7 @@ export class CategoriesService {
     private readonly categoryRepo: Repository<Category>,
   ) {}
 
-  create(createProductInput: CreateCategoryInput) {
+  async create(createProductInput: CreateCategoryInput) {
     const category = {
       ...createProductInput,
     };
@@ -21,15 +21,15 @@ export class CategoriesService {
     return category;
   }
 
-  findAll() {
+  async findAll() {
     return this.categoryRepo.find();
   }
 
-  findOne(name: string) {
+  async findOne(name: string) {
     return this.categoryRepo.findOne({ where: { name } });
   }
 
-  findOneById(id: string) {
+  async findOneById(id: string) {
     return this.categoryRepo.findOne({ where: { id } });
   }
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CategoriesService } from 'src/module/categories/service/categories.service';
 import { Repository } from 'typeorm';
 import { CreateProductInput } from '../dto/create-product.input';
 import { UpdateProductInput } from '../dto/update-product.input';
@@ -10,15 +11,44 @@ export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productRepo: Repository<Product>,
+    private readonly categoryService: CategoriesService,
   ) {}
 
-  create(createProductInput: CreateProductInput) {
-    const product = {
-      ...createProductInput,
-    };
+  async create(createProductInput: CreateProductInput) {
+    const category = await this.categoryService.findOneById(
+      createProductInput.categoryId,
+    );
 
-    this.productRepo.insert(product);
-    return product;
+    if (!category) {
+      throw new Error('Category not found');
+    }
+
+    //check duplicate
+    const duplicate = await this.productRepo
+      .createQueryBuilder('pro')
+      .andWhere('pro.name = :pro', { pro: createProductInput.name })
+      .andWhere('pro.category.id = :cate', { cate: category.id })
+      .getOne();
+
+    if (duplicate) {
+      const product = {
+        ...duplicate,
+        total: duplicate.total + createProductInput.total,
+      };
+
+      this.productRepo.save(product);
+      return product;
+    } else {
+      const product = {
+        total: createProductInput.total,
+        name: createProductInput.name,
+        price: createProductInput.price,
+        category,
+      };
+
+      this.productRepo.insert(product);
+      return product;
+    }
   }
 
   findAll() {

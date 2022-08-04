@@ -4,4 +4,7 @@ import { InputType, Int, Field } from '@nestjs/graphql';
 export class CreateOrderInput {
   @Field()
   description: string;
+
+  @Field()
+  cartId: string;
 }

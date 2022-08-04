@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { OrderType } from 'src/common/constants/order.enum';
+import { Cart } from 'src/module/carts/entities/cart.entity';
 import { User } from 'src/module/users/entities/user.entity';
 import {
   Entity,
@@ -14,13 +15,19 @@ import {
 @ObjectType()
 export class Order {
   @PrimaryGeneratedColumn('uuid')
+  @Field()
   id: string;
+
+  @Column({ type: 'int' })
+  @Field()
+  totaPrice: number;
 
   @Column({ type: 'varchar', length: 255 })
   @Field()
   description: string;
 
   @Column({ type: 'enum', enum: OrderType, default: OrderType.WAITING })
+  @Field()
   status: OrderType;
 
   @UpdateDateColumn()
@@ -31,4 +38,7 @@ export class Order {
 
   @ManyToOne(() => User)
   user: User;
+
+  @ManyToOne(() => Cart)
+  cart: Cart;
 }

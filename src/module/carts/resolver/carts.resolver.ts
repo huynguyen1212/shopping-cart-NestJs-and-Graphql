@@ -41,12 +41,20 @@ export class CartsResolver {
   }
 
   @Query(() => Cart, { name: 'cart' })
+  @Roles(RoleType.USER)
   findOne(@Args('id') id: string) {
     return this.cartsService.findOneById(id);
   }
 
   @Mutation(() => Cart)
-  removeCart(@Args('id') id: string) {
-    return this.cartsService.remove(id);
+  @Roles(RoleType.USER)
+  removeOneTypeProductInCart(@Args('id') id: string) {
+    return this.cartsService.removeOneTypeProductInCart(id);
+  }
+
+  @Mutation(() => Cart)
+  @Roles(RoleType.USER)
+  removeAllCart(@CurrentUser() user: User) {
+    return this.cartsService.removeAllCart(user);
   }
 }

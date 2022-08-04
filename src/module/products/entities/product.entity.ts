@@ -16,6 +16,14 @@ export class Product {
   @Field()
   id: string;
 
+  @Column({ type: 'int' })
+  @Field()
+  price: number;
+
+  @Column({ type: 'int' })
+  @Field()
+  total: number;
+
   @Column({ type: 'varchar', length: 20 })
   @Field()
   name: string;

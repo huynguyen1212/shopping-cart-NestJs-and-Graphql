@@ -5,14 +5,9 @@ import { RoleType } from 'src/common/constants/user.enum.';
 import { ROLES_KEY } from 'src/decorators/roles.decorator';
 import { CodeType } from 'src/common/constants/code-type.enum';
 import { AppError } from 'src/exceptions/app-error';
-import { UsersService } from '../module/users/service/users.service';
-
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(
-    private readonly usersService: UsersService,
-    private reflector: Reflector,
-  ) {}
+  constructor(private reflector: Reflector) {}
 
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context);
@@ -30,9 +25,7 @@ export class RolesGuard implements CanActivate {
     }
 
     const user = this.getRequest(context).user;
-    const roleUser = await this.usersService.findOneById(user?.userId);
-
-    const hasRole = requiredRoles.some((role) => role === roleUser?.role);
+    const hasRole = requiredRoles.some((role) => role === user?.role);
 
     if (hasRole) {
       return true;

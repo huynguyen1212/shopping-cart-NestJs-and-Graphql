@@ -6,4 +6,13 @@ export class CreateProductInput {
   @IsAlphanumeric()
   @Field()
   name: string;
+
+  @Field()
+  price: number;
+
+  @Field()
+  total: number;
+
+  @Field()
+  categoryId: string;
 }

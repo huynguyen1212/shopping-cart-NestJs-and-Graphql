@@ -12,7 +12,7 @@ export class OrdersService {
     private readonly orderRepo: Repository<Order>,
   ) {}
 
-  create(createOrderInput: CreateOrderInput) {
+  async create(createOrderInput: CreateOrderInput) {
     const order = {
       ...createOrderInput,
     };
@@ -21,11 +21,11 @@ export class OrdersService {
     return order;
   }
 
-  findAll() {
+  async findAll() {
     return this.orderRepo.find();
   }
 
-  findOneById(id: string) {
+  async findOneById(id: string) {
     return this.orderRepo.findOne({ where: { id } });
   }
 
@@ -41,11 +41,11 @@ export class OrdersService {
   //   return newPeoduct;
   // }
 
-  async remove(id: string): Promise<Order> {
-    const order = await this.findOneById(id);
+  // async remove(id: string): Promise<Order> {
+  //   const order = await this.findOneById(id);
 
-    await this.orderRepo.delete(id);
+  //   await this.orderRepo.delete(id);
 
-    return order;
-  }
+  //   return order;
+  // }
 }

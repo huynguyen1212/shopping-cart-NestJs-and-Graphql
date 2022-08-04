@@ -91,12 +91,10 @@ export class CartsService {
       .andWhere('c.user.id = :u', { u: user.id })
       .getMany();
 
-    console.log('cart: ', cart);
-
     return cart;
   }
 
-  findOneById(id: string) {
+  async findOneById(id: string) {
     return this.cartRepo.findOne({ where: { id } });
   }
 
@@ -112,11 +110,19 @@ export class CartsService {
   //   return newPeoduct;
   // }
 
-  async remove(id: string): Promise<Cart> {
+  async removeOneTypeProductInCart(id: string) {
     const cart = await this.findOneById(id);
-
     await this.cartRepo.delete(id);
 
     return cart;
+  }
+
+  async removeAllCart(user: User) {
+    this.cartRepo
+      .createQueryBuilder('c')
+      .delete()
+      .where('c.user.id = :u', { u: user.id });
+
+    throw new Error('Delete success');
   }
 }
