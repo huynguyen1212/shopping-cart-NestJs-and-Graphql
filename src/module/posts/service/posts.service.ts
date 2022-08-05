@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CommentsService } from 'src/module/comments/service/comments.service';
 import { User } from 'src/module/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostInput } from '../dto/create-post.input';
@@ -10,7 +11,7 @@ import { Post } from '../entities/post.entity';
 export class PostsService {
   constructor(
     @InjectRepository(Post)
-    private readonly postRepo: Repository<Post>,
+    private readonly postRepo: Repository<Post>, // private readonly commentServce: CommentsService,
   ) {}
 
   async create(createProductInput: CreatePostInput, user: User) {
@@ -23,11 +24,11 @@ export class PostsService {
     return post;
   }
 
-  findAll() {
+  async findAll() {
     return this.postRepo.find();
   }
 
-  findOneById(id: string) {
+  async findOneById(id: string) {
     return this.postRepo.findOne({ where: { id } });
   }
 

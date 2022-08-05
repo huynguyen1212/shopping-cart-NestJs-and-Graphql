@@ -28,6 +28,7 @@ input CreateCategoryInput {
 
 input CreateCommentInput {
   content: String!
+  postId: String!
 }
 
 input CreateEvaluateInput {
@@ -113,6 +114,11 @@ type Post {
   content: String!
 }
 
+type PostAndCommentOutput {
+  comment: Comment!
+  post: Post!
+}
+
 type Product {
   id: String!
   name: String!
@@ -132,6 +138,7 @@ type Query {
   orders: [Order!]!
   post(id: String!): Post!
   posts: [Post!]!
+  postsAndComment(postId: String!): PostAndCommentOutput!
   product(name: String!): Product!
   products: [Product!]!
   user(username: String!): User!
@@ -157,6 +164,7 @@ input UpdateCategoryInput {
 input UpdateCommentInput {
   content: String
   id: String!
+  postId: String
 }
 
 input UpdateEvaluateInput {

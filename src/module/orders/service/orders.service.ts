@@ -19,13 +19,11 @@ export class OrdersService {
   async create(createOrderInput: CreateOrderInput, user: User) {
     const order = new Order();
     const cart = await this.cartsService.findAll(user, CartType.PICK);
-
-    console.log('cart: ', cart);
-
     const sum = await this.cartsService.sum(user);
     if (sum === 0) {
       throw new Error('Cart is empty!');
     }
+
     order.description = createOrderInput.description;
     order.cart = cart;
     order.totaPrice = sum;

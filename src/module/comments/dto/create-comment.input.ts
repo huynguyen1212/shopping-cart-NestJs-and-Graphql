@@ -6,4 +6,7 @@ export class CreateCommentInput {
   @IsAlphanumeric()
   @Field()
   content: string;
+
+  @Field()
+  postId: string;
 }

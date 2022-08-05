@@ -22,7 +22,6 @@ export class PostsResolver {
   }
 
   @Query(() => [Post], { name: 'posts' })
-  @Roles(RoleType.ADMIN)
   findAll() {
     return this.postsService.findAll();
   }

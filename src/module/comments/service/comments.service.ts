@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PostsService } from 'src/module/posts/service/posts.service';
+import { User } from 'src/module/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateCommentInput } from '../dto/create-comment.input';
+import { PostAndCommentOutput } from '../dto/post-and-comment.output';
 import { UpdateCommentInput } from '../dto/update-comment.input';
 import { Comment } from '../entities/comment.entity';
 
@@ -10,22 +13,48 @@ export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private readonly commentRepo: Repository<Comment>,
+    private readonly postService: PostsService,
   ) {}
 
-  create(createCommentInput: CreateCommentInput) {
-    const comment = {
-      ...createCommentInput,
-    };
+  async create(createCommentInput: CreateCommentInput, user: User) {
+    const comment = new Comment();
 
-    this.commentRepo.insert(comment);
+    const post = await this.postService.findOneById(createCommentInput.postId);
+
+    comment.content = createCommentInput.content;
+    comment.post = post;
+    comment.user = user;
+
+    this.commentRepo.save(comment);
     return comment;
   }
 
-  findAll() {
+  async findAll() {
     return this.commentRepo.find();
   }
 
-  findOneById(id: string) {
+  async findByPostId(postId: string) {
+    const comment = this.commentRepo
+      .createQueryBuilder('c')
+      .andWhere('c.post.id = :p', { p: postId })
+      .getMany();
+
+    return comment;
+  }
+
+  async findAllPostAndComment(postId: string) {
+    const post = await this.postService.findOneById(postId);
+    const comment = await this.findByPostId(postId);
+
+    const postAndComment: PostAndCommentOutput = {
+      post,
+      comment,
+    };
+
+    return postAndComment;
+  }
+
+  async findOneById(id: string) {
     return this.commentRepo.findOne({ where: { id } });
   }
 
