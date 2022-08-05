@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/module/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreatePostInput } from '../dto/create-post.input';
 import { UpdatePostInput } from '../dto/update-post.input';
@@ -12,9 +13,10 @@ export class PostsService {
     private readonly postRepo: Repository<Post>,
   ) {}
 
-  create(createProductInput: CreatePostInput) {
+  async create(createProductInput: CreatePostInput, user: User) {
     const post = {
       ...createProductInput,
+      user,
     };
 
     this.postRepo.insert(post);
