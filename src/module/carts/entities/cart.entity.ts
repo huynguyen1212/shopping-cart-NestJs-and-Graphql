@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { CartType } from 'src/common/constants/cart.enum';
+import { Order } from 'src/module/orders/entities/order.entity';
 import { Product } from 'src/module/products/entities/product.entity';
 import { User } from 'src/module/users/entities/user.entity';
 import {
@@ -26,6 +27,10 @@ export class Cart {
   @Field()
   total: number;
 
+  @Column({ type: 'float' })
+  @Field()
+  price: number;
+
   @UpdateDateColumn()
   updated: Date;
 
@@ -37,4 +42,7 @@ export class Cart {
 
   @ManyToOne(() => User)
   user: User;
+
+  @ManyToOne(() => Order)
+  order: Order;
 }

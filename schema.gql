@@ -9,6 +9,7 @@ input AddProductToCartInput {
 
 type Cart {
   id: String!
+  price: Float!
   status: String!
   total: Float!
 }
@@ -34,7 +35,6 @@ input CreateEvaluateInput {
 }
 
 input CreateOrderInput {
-  cartId: String!
   description: String!
 }
 
@@ -95,6 +95,7 @@ type Mutation {
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   updateEvaluate(updateEvaluateInput: UpdateEvaluateInput!): Evaluate!
+  updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   updatePost(updatePostInput: UpdatePostInput!): Post!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   updateStatusCart(updateStatusCart: UpdateCartInput!): Cart!
@@ -161,6 +162,12 @@ input UpdateCommentInput {
 input UpdateEvaluateInput {
   content: String
   id: String!
+}
+
+input UpdateOrderInput {
+  description: String
+  id: String!
+  status: String!
 }
 
 input UpdatePostInput {

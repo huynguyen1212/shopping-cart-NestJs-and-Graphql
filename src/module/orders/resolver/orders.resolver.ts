@@ -32,10 +32,10 @@ export class OrdersResolver {
     return this.ordersService.findOneById(id);
   }
 
-  // @Mutation(() => Order)
-  // updateOrder(@Args('updateOrderInput') updateOrderInput: UpdateOrderInput) {
-  //   return this.ordersService.update(updateOrderInput.id, updateOrderInput);
-  // }
+  @Mutation(() => Order)
+  updateOrder(@Args('updateOrderInput') updateOrderInput: UpdateOrderInput) {
+    return this.ordersService.update(updateOrderInput);
+  }
 
   // @Mutation(() => Order)
   // removeOrder(@Args('id') id: string) {

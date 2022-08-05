@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('orders')
@@ -39,6 +40,6 @@ export class Order {
   @ManyToOne(() => User)
   user: User;
 
-  @ManyToOne(() => Cart)
-  cart: Cart;
+  @OneToMany(() => Cart, (cart) => cart.order)
+  cart: Cart[];
 }
