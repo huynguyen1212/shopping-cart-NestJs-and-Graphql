@@ -6,4 +6,7 @@ export class CreateEvaluateInput {
   @IsAlphanumeric()
   @Field()
   content: string;
+
+  @Field()
+  productId: string;
 }

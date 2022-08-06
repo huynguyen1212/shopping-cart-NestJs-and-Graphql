@@ -1,6 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { RoleType } from 'src/common/constants/user.enum.';
+import { CurrentUser } from 'src/decorators/current-user';
 import { Roles } from 'src/decorators/roles.decorator';
+import { User } from 'src/module/users/entities/user.entity';
 import { CreateEvaluateInput } from '../dto/create-evaluate.input';
 import { UpdateEvaluateInput } from '../dto/update-evaluate.input';
 import { Evaluate } from '../entities/evaluate.entity';
@@ -14,8 +16,9 @@ export class EvaluateResolver {
   @Roles(RoleType.USER)
   createEvaluate(
     @Args('createEvaluateInput') createEvaluateInput: CreateEvaluateInput,
+    @CurrentUser() user: User,
   ) {
-    return this.evaluateService.create(createEvaluateInput);
+    return this.evaluateService.create(createEvaluateInput, user);
   }
 
   @Query(() => [Evaluate], { name: 'evaluate' })
@@ -24,18 +27,16 @@ export class EvaluateResolver {
   }
 
   @Query(() => Evaluate, { name: 'evaluate' })
-  @Roles(RoleType.ADMIN)
   findOne(@Args('id') id: string) {
     return this.evaluateService.findOneById(id);
   }
 
-  @Mutation(() => Evaluate)
-  @Roles(RoleType.USER)
-  updateEvaluate(
-    @Args('updateEvaluateInput') updateEvaluateInput: UpdateEvaluateInput,
-  ) {
-    return this.evaluateService.update(updateEvaluateInput);
-  }
+  // @Mutation(() => Evaluate)
+  // updateEvaluate(
+  //   @Args('updateEvaluateInput') updateEvaluateInput: UpdateEvaluateInput,
+  // ) {
+  //   return this.evaluateService.update(updateEvaluateInput);
+  // }
 
   @Mutation(() => Evaluate)
   @Roles(RoleType.ADMIN) // va user evaluste đó

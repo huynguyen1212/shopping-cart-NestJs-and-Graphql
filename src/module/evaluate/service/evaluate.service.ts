@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ProductsService } from 'src/module/products/service/products.service';
+import { User } from 'src/module/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateEvaluateInput } from '../dto/create-evaluate.input';
 import { UpdateEvaluateInput } from '../dto/update-evaluate.input';
@@ -10,36 +12,42 @@ export class EvaluateService {
   constructor(
     @InjectRepository(Evaluate)
     private readonly evaluateRepo: Repository<Evaluate>,
+    private readonly productsService: ProductsService,
   ) {}
 
-  create(createCommentInput: CreateEvaluateInput) {
-    const evaluate = {
-      ...createCommentInput,
-    };
+  async create(createCommentInput: CreateEvaluateInput, user: User) {
+    const evaluate = new Evaluate();
+    const product = await this.productsService.findOneById(
+      createCommentInput.productId,
+    );
 
-    this.evaluateRepo.insert(evaluate);
+    evaluate.content = createCommentInput.content;
+    evaluate.user = user;
+    evaluate.product = product;
+
+    this.evaluateRepo.save(evaluate);
     return evaluate;
   }
 
-  findAll() {
+  async findAll() {
     return this.evaluateRepo.find();
   }
 
-  findOneById(id: string) {
+  async findOneById(id: string) {
     return this.evaluateRepo.findOne({ where: { id } });
   }
 
-  async update(input: UpdateEvaluateInput) {
-    const { id, ...rest } = input;
+  // async update(input: UpdateEvaluateInput) {
+  //   const { id, ...rest } = input;
 
-    const evaluate = await this.findOneById(id);
+  //   const evaluate = await this.findOneById(id);
 
-    const newComment = Object.assign(evaluate, rest);
+  //   const newEvaluate = Object.assign(evaluate, rest);
 
-    await this.evaluateRepo.save(newComment);
+  //   await this.evaluateRepo.save(newEvaluate);
 
-    return newComment;
-  }
+  //   return newEvaluate;
+  // }
 
   async remove(id: string): Promise<Evaluate> {
     const evaluate = await this.findOneById(id);

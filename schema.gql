@@ -33,6 +33,7 @@ input CreateCommentInput {
 
 input CreateEvaluateInput {
   content: String!
+  productId: String!
 }
 
 input CreateOrderInput {
@@ -95,7 +96,6 @@ type Mutation {
   signup(createUserInput: CreateUserInput!): User!
   updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
   updateComment(updateCommentInput: UpdateCommentInput!): Comment!
-  updateEvaluate(updateEvaluateInput: UpdateEvaluateInput!): Evaluate!
   updateOrder(updateOrderInput: UpdateOrderInput!): Order!
   updatePost(updatePostInput: UpdatePostInput!): Post!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
@@ -166,11 +166,6 @@ input UpdateCommentInput {
   content: String
   id: String!
   postId: String
-}
-
-input UpdateEvaluateInput {
-  content: String
-  id: String!
 }
 
 input UpdateOrderInput {
