@@ -134,6 +134,7 @@ type Query {
   comment(id: String!): Comment!
   comments: [Comment!]!
   evaluate(id: String!): Evaluate!
+  evaluates: [Evaluate!]!
   order(id: String!): Order!
   orders: [Order!]!
   post(id: String!): Post!

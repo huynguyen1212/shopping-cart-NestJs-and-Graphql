@@ -21,7 +21,7 @@ export class EvaluateResolver {
     return this.evaluateService.create(createEvaluateInput, user);
   }
 
-  @Query(() => [Evaluate], { name: 'evaluate' })
+  @Query(() => [Evaluate], { name: 'evaluates' })
   findAll() {
     return this.evaluateService.findAll();
   }
