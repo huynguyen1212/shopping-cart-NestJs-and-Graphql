@@ -141,6 +141,7 @@ type Query {
   postsAndComment(postId: String!): PostAndCommentOutput!
   product(name: String!): Product!
   products: [Product!]!
+  productsSaled: [Product!]!
   user(username: String!): User!
   users: [User!]!
 }

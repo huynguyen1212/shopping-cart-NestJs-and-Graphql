@@ -115,6 +115,24 @@ export class CartsService {
     }
   }
 
+  async findSaled(user: User) {
+    const cart: Cart[] = await this.cartRepo
+      .createQueryBuilder('c')
+      .leftJoinAndSelect('c.product', 'product')
+      .andWhere('c.user.id = :u', { u: user.id })
+      .andWhere('c.status = :s', { s: CartType.SALED })
+      .getMany();
+
+    const products = [];
+
+    for (let i = 0; i < cart.length; i++) {
+      const product = cart[i]?.product;
+      products.push(product);
+    }
+
+    return products;
+  }
+
   async sum(user: User) {
     const sum = await this.cartRepo
       .createQueryBuilder('c')

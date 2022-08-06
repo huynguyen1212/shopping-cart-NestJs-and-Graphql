@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { RoleType } from 'src/common/constants/user.enum.';
 import { CurrentUser } from 'src/decorators/current-user';
 import { Roles } from 'src/decorators/roles.decorator';
+import { Product } from 'src/module/products/entities/product.entity';
 import { User } from 'src/module/users/entities/user.entity';
 import { AddProductToCartInput } from '../dto/add-product-to-cart.input';
 import { RemoveProductInCartInput } from '../dto/remove-prodyct-in-cart.input';
@@ -48,6 +49,12 @@ export class CartsResolver {
   @Roles(RoleType.USER)
   findAll(@CurrentUser() user: User) {
     return this.cartsService.findAll(user);
+  }
+
+  @Query(() => [Product], { name: 'productsSaled' })
+  @Roles(RoleType.USER)
+  findSaled(@CurrentUser() user: User) {
+    return this.cartsService.findSaled(user);
   }
 
   @Query(() => Cart, { name: 'cart' })
