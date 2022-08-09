@@ -1,7 +1,9 @@
 # compiled output
 /dist
 /node_modules
-
+product-shop-be-firebase-adminsdk-qa9rw-e5e384be15.json
+product-shop-be-firebase-adminsdk-qa9rw-d241e6d3de.json
+firebase.config.json
 # Logs
 logs
 *.log
